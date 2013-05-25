@@ -4,9 +4,15 @@ body, html {
 }
 
 #image-frame {
-    margin: 10px;
+    margin: 10px auto;
     padding: 10px;
     background-color: #fff;
     box-shadow: 0px 0px 10px #888888;
-    height:200px;
+    width: 400px;
+    height:400px;
+}
+
+#set-image {
+    width: 400px;
+    height: 400px;
 }

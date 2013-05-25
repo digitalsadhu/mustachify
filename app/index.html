@@ -17,25 +17,26 @@
 
     <body ng-app="mustachifyApp">
 
-        <section role="region" id="header">
+        <section role="region" id="header" ng-controller="headerCtrl">
             <header>
                 <menu type="toolbar">
-                    <a href="#"><span class="icon icon-add">add</span></a>
+                    <a href="#" ng-click="pickImage"><span class="icon icon-add">pick</span></a>
                 </menu>
                 <h1>Mustachify Me!</h1>
             </header>
         </section>
 
-        <section role="region" id="image-handling">
+        <section role="region" id="image-handling" ng-controller="imageCtrl">
             <div id="image-frame">
-                <p id="default-text">
+                <!-- <p id="default-text">
                     Upload your image!
-                </p>
+                </p> -->
+                <img id="set-image" src="{{mustachedImage}}">
             </div>
         </section>
 
-        <section role="region" id="share">
-            <button>Set as background</button>
+        <section role="region" id="share" ng-controller="shareCtrl">
+            <button ng-click="setBackground">Set as background</button>
         </section>
 
         <script src="components/angular/angular.js"></script>
