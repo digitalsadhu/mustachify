@@ -1,0 +1,18 @@
+{
+  "version": "0.1",
+  "name": "Mustachify",
+  "description": "Web app for Firefox OS that allows you to take a picture and 'mustachify' it",
+  "launch_path": "/index.html",
+  "icons": {
+    "16": "/images/icons/mortar-16.png",
+    "48": "/images/icons/mortar-48.png",
+    "128": "/images/icons/mortar-128.png"
+  },
+  "developer": {
+    "name": "Richard Walker",
+    "url": "http://github.com/digitalsadhu/"
+  },
+  "installs_allowed_from": ["*"],
+  "appcache_path": "/manifest.appcache",
+  "default_locale": "en"
+}
