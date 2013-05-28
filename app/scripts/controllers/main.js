@@ -1,94 +1,57 @@
 'use strict';
 
+var imageServerUrl = "http://mustachify.herokuapp.com";
+var mustachServiceUrl = "http://mustachify.me/?src=http%3A%2F%2Fmustachify.herokuapp.com%2F&t=123";
+
 angular.module('mustachifyApp')
-    .controller('headerCtrl', function ($scope, $http) {
+    .controller('headerCtrl', function ($scope, $rootScope) {
+
+
         $scope.pickImage = function () {
-            
-            
 
-
-            // var url = "http://mustachify.herokuapp.com";
-            // var image = {"image": "test"}; 
-            
-            // var xmlHttp = new XMLHttpRequest();  
-            
-            // xmlHttp.open('POST', url, true);
-
-            // //xmlHttp.setRequestHeader('content-type', '');
-
-            // xmlHttp.onreadystatechange = function () {
-            //     console.log('something');
-            // };
-            // xmlHttp.send(image); 
-
-            // console.log('pick image');
-
-            var a = new MozActivity({ 
+            var getImageActivity = new MozActivity({
                 name: "pick",
                 data: {
-                    type: "image/jpeg", multiple: false 
+                    type: "image/jpeg", multiple: false
                 }
             });
-
-            a.onsuccess = function() { 
-                
-                // var url = "http://mustachify.herokuapp.com";
-                var url = "http://localhost:3000";
-                // var image = {"image": a.result.blob}; 
-                // console.log(a.result);
-                // var xmlHttp = new XMLHttpRequest();  
-                // xmlHttp.setRequestHeader('content-type', 'multipart/form-data');
-                // xmlHttp.open('POST', url, true);
-
-                // xmlHttp.onreadystatechange = function () {
-                //     console.log('something');
-                // };
-                // xmlHttp.send(image); 
-                
-                // var blob = new Blob([a.result.blob], {"type": "image/jpeg"});
-
+            getImageActivity.onsuccess = function() {
+                // We have an image
+                // Send it to the hosting site
                 var formData = new FormData();
-                formData.append('image', a.result.blob);
-
+                formData.append('image', getImageActivity.result.blob);
 
                 var xhr = new XMLHttpRequest();
 
-                // xhr.upload.addEventListener("progress", function(e) {
-                //     if (e.lengthComputable) {
-                //       var percentage = Math.round((e.loaded * 100) / e.total);
-                //       self.ctrl.update(percentage);
-                //     }
-                //   }, false);
-
-                // xhr.upload.addEventListener("load", function(e){
-                //       self.ctrl.update(100);
-                //       var canvas = self.ctrl.ctx.canvas;
-                //       canvas.parentNode.removeChild(canvas);
-                //   }, false);
-
-                xhr.open("POST", url, true);
-                // xhr.overrideMimeType('text/plain; charset=x-user-defined-binary');
+                xhr.open("POST", imageServerUrl, true);
+                xhr.addEventListener("loadend", function() {
+                    $rootScope.$broadcast("image_updated");
+                })
                 xhr.send(formData);
-                
-                
-
-
-
-                // $http.post(url, formData).success(function () {
-                //     $scope.$apply();
-                // }).error(function (data, status) {
-                //     console.log("fail!");
-                // });
             };
 
-            a.onerror = function() { 
-                alert("Failure when trying to pick an image!"); 
+            getImageActivity.onerror = function() {
+                alert("Failure when trying to pick an image!");
             };
-            
+
         }
     })
     .controller('imageCtrl', function ($scope) {
-        $scope.mustachedImage = "http://mustachify.me/?src=http%3A%2F%2Fmustachify.herokuapp.com%2F";
+        $scope.mustachedImage = mustachServiceUrl;
+        console.log($scope.mustachedImage);
+        $scope.$on("image_updated", function() {
+            // refresh the image being displayed
+
+            var oldUrl = $scope.mustachedImage;
+
+            var currentTimestamp = Date.now();
+
+            var newUrl = oldUrl.replace(/&t=[0-9]*$/, "&t="+ currentTimestamp);
+            $scope.mustachedImage = newUrl;
+
+            // Not sure why this is required but it does not seem to work without it
+            $scope.$apply();
+        });
     })
     .controller('shareCtrl', function ($scope) {
         $scope.setBackground = function () {
