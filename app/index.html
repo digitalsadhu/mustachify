@@ -17,27 +17,37 @@
 
     <body ng-app="mustachifyApp">
 
-        <section role="region" id="header" ng-controller="headerCtrl">
-            <header>
-                <menu type="toolbar">
-                    <a href="#" ng-click="pickImage"><span class="icon icon-add">pick</span></a>
-                </menu>
-                <h1>Mustachify Me!</h1>
-            </header>
-        </section>
+        <mobile-view>
 
-        <section role="region" id="image-handling" ng-controller="imageCtrl">
-            <div id="image-frame">
-                <!-- <p id="default-text">
-                    Upload your image!
-                </p> -->
-                <img id="set-image" src="{{mustachedImage}}">
+            <div class="mb-page"> 
+
+                <section role="region" id="header" ng-controller="headerCtrl">
+                    <header>
+                        <menu type="toolbar">
+                            <a href="#" ng-click="pickImage()">
+                                <span class="icon icon-add">pick</span>
+                            </a>
+                        </menu>
+                        <h1>Mustachify Me!</h1>
+                    </header>
+                </section>
+
+                <section role="region" id="image-handling" ng-controller="imageCtrl">
+                    <div id="image-frame">
+                        <!-- <p id="default-text">
+                            Upload your image!
+                        </p> -->
+                        <img id="set-image" src="{{mustachedImage}}">
+                    </div>
+                </section>
+
+                <section role="region" id="share" ng-controller="shareCtrl">
+                    <button ng-click="setBackground">Set as background</button>
+                </section>
+
             </div>
-        </section>
 
-        <section role="region" id="share" ng-controller="shareCtrl">
-            <button ng-click="setBackground">Set as background</button>
-        </section>
+        </mobile-view>
 
         <script src="components/angular/angular.js"></script>
         <script src="components/angular-resource/angular-resource.js"></script>
@@ -45,6 +55,7 @@
         <script src="components/angular-sanitize/angular-sanitize.js"></script>
 
         <!-- build:js scripts/scripts.js -->
+        <script src="components/jquery/jquery.js"></script>
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
         <!-- endbuild -->
