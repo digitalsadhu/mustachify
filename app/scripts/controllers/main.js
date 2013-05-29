@@ -1,8 +1,5 @@
 'use strict';
 
-// var imageServerUrl = "http://mustachify.herokuapp.com";
-// var mustachServiceUrl = "http://mustachify.me/?src=http%3A%2F%2Fmustachify.herokuapp.com%2F&t=123";
-
 angular.module('mustachifyApp')
     .controller('headerCtrl', function ($scope, $rootScope, serverEventStream, configuration) {
 

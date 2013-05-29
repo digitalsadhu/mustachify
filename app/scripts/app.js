@@ -1,12 +1,6 @@
 'use strict';
 
 var app = angular.module('mustachifyApp', []);
-// I dont think this is being used
-app.config(['$httpProvider', function ($httpProvider) {
-    $httpProvider.defaults.useXDomain = true;
-    delete $httpProvider.defaults.headers.common['X-Request-With'];
-}]);
-
 
 app.factory('serverEventStream', function ($rootScope, configuration) {
   console.log("connecting to event stream");
