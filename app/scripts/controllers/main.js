@@ -1,10 +1,10 @@
 'use strict';
 
-var imageServerUrl = "http://mustachify.herokuapp.com";
-var mustachServiceUrl = "http://mustachify.me/?src=http%3A%2F%2Fmustachify.herokuapp.com%2F&t=123";
+// var imageServerUrl = "http://mustachify.herokuapp.com";
+// var mustachServiceUrl = "http://mustachify.me/?src=http%3A%2F%2Fmustachify.herokuapp.com%2F&t=123";
 
 angular.module('mustachifyApp')
-    .controller('headerCtrl', function ($scope, $rootScope) {
+    .controller('headerCtrl', function ($scope, $rootScope, serverEventStream, configuration) {
 
 
         $scope.pickImage = function () {
@@ -23,7 +23,7 @@ angular.module('mustachifyApp')
 
                 var xhr = new XMLHttpRequest();
 
-                xhr.open("POST", imageServerUrl, true);
+                xhr.open("POST", configuration.imageServerUrl, true);
                 xhr.addEventListener("loadend", function() {
                     $rootScope.$broadcast("image_updated");
                 })
@@ -36,12 +36,12 @@ angular.module('mustachifyApp')
 
         }
     })
-    .controller('imageCtrl', function ($scope) {
-        $scope.mustachedImage = mustachServiceUrl;
+    .controller('imageCtrl', function ($scope, configuration) {
+        $scope.mustachedImage = configuration.mustachServiceUrl;
         console.log($scope.mustachedImage);
         $scope.$on("image_updated", function() {
             // refresh the image being displayed
-
+            console.log("updating image");
             var oldUrl = $scope.mustachedImage;
 
             var currentTimestamp = Date.now();
